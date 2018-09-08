@@ -80,7 +80,7 @@ public extension MultipartRequest {
         if let files = self.files {
             descr += "\nFiles:\n"
             files.forEach{
-                descr += "\($0.name) of type '\($0.mimeType)' (size: \($0.value.dataSize.maxDescription))\n"
+                descr += "\($0.name) of type '\($0.mimeType)' (size: \($0.value.size.maxDescription))\n"
             }
         } else if let files = self.filePaths {
             descr += "\n Files:\n"

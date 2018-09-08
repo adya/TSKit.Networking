@@ -15,10 +15,13 @@ public protocol AnyResponse {
     
     /// Mandatory initializer to set a request related to this response.
     /// - Note: Initializer can fail if it could not handle response body.
-    init?(request : Request, body : Any)
+    init?(request : Request, status: Int, body : Any)
     
     /// Request related to the response.
     var request : Request {get}
+    
+    /// Status code returned by server.
+    var status: Int { get }
 }
 
 /**
@@ -58,6 +61,9 @@ public enum ResponseKind {
     
     /// Response handles String.
     case string
+    
+    /// TSResponse handles no data.
+    case empty
 }
 
 // MARK: - Response Defaults

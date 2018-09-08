@@ -1,5 +1,5 @@
 /** 
- Represents result of the request with associated responsed object.
+ Represents result of the request with associated responded object.
  
  - Requires:    iOS  [2.0; 8.0)
  - Requires:    Swift 2+
@@ -14,7 +14,7 @@ public enum ResponseResult <T: Any> {
     case success(response : T)
     
     /// Request failed with an error.
-    /// - Parameter error: Occured error.
+    /// - Parameter error: Occurred error.
     case failure(error : RequestError)
 }
 
@@ -27,7 +27,7 @@ public enum ResponseResult <T: Any> {
 - Since:       10/30/2016
 - Author:      AdYa
 */
-public enum Result {
+public enum EmptyResult {
     
     /// Response was successful and valid.
     case success
@@ -37,7 +37,7 @@ public enum Result {
 }
 
 // MARK: - Conversion
-public extension Result {
+public extension EmptyResult {
     public init(responseResult : AnyResponseResult) {
         switch responseResult {
         case .success: self = .success
