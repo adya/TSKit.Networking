@@ -1,13 +1,13 @@
 /** 
- Defines request properties required to perform request call.
+ Configuration of a network request.
  
- - Requires:    iOS  [2.0; 8.0)
+ - Requires:    iOS 2.0+
  - Requires:    Swift 2+
- - Version:     2.1
+ - Version:     3.0
  - Since:       10/30/2016
- - Author:      AdYa
+ - Author:      Arkadii Hlushchevskyi
  */
-public protocol Request: CustomStringConvertible {
+public protocol AnyRequest: CustomStringConvertible {
 
     /// HTTP Method of the request.
     var method: RequestMethod { get }
@@ -19,12 +19,12 @@ public protocol Request: CustomStringConvertible {
      */
     var encoding: RequestEncoding { get }
 
-    /// Base url which will be used instead of default one from `RequestManager` configuration.
+    /// Overridden host which will be used instead of default host specified in network configuration.
     /// - Note: Default = nil.
-    var baseUrl: String? { get }
+    var host: String? { get }
 
-    /// Url part for request
-    var url: String { get }
+    /// Resource path relative to the host.
+    var path: String { get }
 
     /// Set of status codes acceptable by this request.
     /// - Note: Default = 200..<300
@@ -46,11 +46,11 @@ public protocol Request: CustomStringConvertible {
 /** 
  Defines supported HTTP Methods.
  
- - Requires:    iOS  [2.0; 8.0)
+ - Requires:    iOS  2.0+
  - Requires:    Swift 2+
  - Version:     2.1
  - Since:       10/30/2016
- - Author:      AdYa
+ - Author:      Arkadii Hlushchevskyi
  */
 public enum RequestMethod {
     case get
@@ -63,11 +63,11 @@ public enum RequestMethod {
 /** 
  Defines how request parameters should be encoded.
  
- - Requires:    iOS  [2.0; 8.0)
+ - Requires:    iOS  2.0+
  - Requires:    Swift 2+
  - Version:     2.1
  - Since:       10/30/2016
- - Author:      AdYa
+ - Author:      Arkadii Hlushchevskyi
  */
 public enum RequestEncoding {
 
@@ -82,7 +82,7 @@ public enum RequestEncoding {
 }
 
 // MARK: - Defaults
-public extension Request {
+public extension AnyRequest {
 
     public var baseUrl: String? {
         return nil
@@ -109,10 +109,10 @@ public extension Request {
 
     var description: String {
         var descr = "\(self.method) '"
-        if let baseUrl = self.baseUrl {
+        if let baseUrl = self.host {
             descr += "\(baseUrl)/"
         }
-        descr += "\(self.url)'"
+        descr += "\(self.path)'"
         if let headers = self.headers {
             descr += "\nHeaders:\n\(headers)"
         }

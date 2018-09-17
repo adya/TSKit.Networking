@@ -11,31 +11,32 @@
  - Author:      AdYa
  */
 public protocol AnyRequestManager: class {
-    
+
     /// Closures to be called if specified errors occurred.
-    var errorHandlers: [RequestError: () -> Void] { get set }
-    
+    var errorHandlers: [RequestError : () -> Void] { get set }
+
     /// Mandatory initializer with configuration object to set default properties.
     /// - Parameter configuration: An object containing custom properties.
-    init(configuration : RequestManagerConfiguration)
-    
+    init(configuration: RequestManagerConfiguration)
+
     /**
      Executes a request call.
      - Parameter requestCalls: Request calls to be executed.
      - Parameter option: Defines advanced behavior of the `RequestManager`.
      - Parameter completion: Completion closure to be called after all requests completed.
      */
-    func request(_ requestCalls : [AnyRequestCall], option : ExecutionOption,  completion : RequestCompletion?)
-    
+    func request(_ requestCalls: [AnyRequestCall], option: ExecutionOption, completion: RequestCompletion?)
+
     /**
      Executes a request call.
      - Parameter requestCall: Request call to be executed.
      - Parameter progressCompletion: Completion closure to be called if progress has changed.
      - Parameter completion: Completion closure to be called after request completed.
      */
-    func request(_ requestCall : AnyRequestCall, progressCompletion: RequestProgressCompletion?, completion : RequestCompletion?)
+    func request(_ requestCall: AnyRequestCall,
+                 progressCompletion: RequestProgressCompletion?,
+                 completion: RequestCompletion?)
 }
-
 
 public typealias RequestCompletion = (EmptyResult) -> Void
 
@@ -43,57 +44,60 @@ public typealias RequestProgressCompletion = (Float) -> Void
 
 /// Defines advanced behavior of the `RequestManager` when dealing with multiple requests.
 public enum ExecutionOption {
-    
-    /// Indicates that `RequestManager` should execute each request call synchronously.
+
+    /// Indicates that `AnyRequestManager` should execute each request call synchronously.
     /// - Parameter ignoreFailures: Indicates whether the manager should abort when any error occurred or continue
     /// execution.
-    case executeSynchronously(ignoreFailures : Bool)
-    
-    /// Indicates that `RequestManager` should execute all request calls asynchronously.
-    case executeAsynchronously
+    case executeSynchronously(ignoreFailures: Bool)
+
+    /// Indicates that `AnyRequestManager` should execute all request calls asynchronously.
+    /// - Parameter ignoreFailures: Indicates whether the manager should abort when any error occurred or continue
+    /// execution.
+    case executeAsynchronously(ignoreFailures: Bool)
 }
 
 /// Defines configurable properties of `RequestManager`
 public protocol RequestManagerConfiguration {
-    
+
     /// Any default headers which must be attached to each request
-    var headers : [String : String]? {get}
-    
+    var headers: [String : String]? { get }
+
     /// Base url used for each request, unless the last one will explicitly override it.
-    var baseUrl : String {get}
-    
+    var baseUrl: String { get }
+
     /// Default timeout for each request in seconds. Defaults to `30`.
-    var timeout : Int {get}
+    var timeout: Int { get }
 }
 
 public extension AnyRequestManager {
-    public func request(_ requestCalls : [AnyRequestCall], completion: RequestCompletion?) {
-        self.request(requestCalls, option: .executeAsynchronously, completion: completion)
+    public func request(_ requestCalls: [AnyRequestCall], completion: RequestCompletion?) {
+        self.request(requestCalls, option: .executeAsynchronously(ignoreFailures: true), completion: completion)
     }
-    
-    public func request(_ requestCalls : [AnyRequestCall]) {
+
+    public func request(_ requestCalls: [AnyRequestCall]) {
         self.request(requestCalls, completion: nil)
     }
-    
-    public func request(_ requestCall : AnyRequestCall) {
+
+    public func request(_ requestCall: AnyRequestCall) {
         self.request(requestCall, progressCompletion: nil, completion: nil)
     }
-    
-    public func request(_ requestCall : AnyRequestCall, progressCompletion: RequestProgressCompletion?) {
+
+    public func request(_ requestCall: AnyRequestCall, progressCompletion: RequestProgressCompletion?) {
         self.request(requestCall, progressCompletion: progressCompletion, completion: nil)
     }
-    
-    public func request(_ requestCall : AnyRequestCall, completion: RequestCompletion?) {
+
+    public func request(_ requestCall: AnyRequestCall, completion: RequestCompletion?) {
         self.request(requestCall, progressCompletion: nil, completion: completion)
     }
 }
 
 public extension RequestManagerConfiguration {
-    public var headers : [String : String]? {
+
+    var headers: [String : String]? {
         return nil
     }
-    
-    public var timeout : Int {
+
+    var timeout: Int {
         return 30
     }
 }

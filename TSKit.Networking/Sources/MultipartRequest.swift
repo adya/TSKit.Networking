@@ -10,7 +10,7 @@ import TSKit_Core
  - Since:       10/30/2016
  - Author:      AdYa
  */
-public protocol MultipartRequest : Request {
+public protocol MultipartRequest : AnyRequest {
     
     /// File representations with raw data.
     /// - Note: Default = nil.
@@ -67,10 +67,10 @@ public extension MultipartRequest {
     
     public var description: String {
         var descr = "\(self.method) '"
-        if let baseUrl = self.baseUrl {
+        if let baseUrl = self.host {
             descr += "\(baseUrl)/"
         }
-        descr += "\(self.url)'"
+        descr += "\(self.path)'"
         if let headers = self.headers {
             descr += "\nHeaders:\n\(headers)"
         }

@@ -15,10 +15,10 @@ public protocol AnyResponse {
     
     /// Mandatory initializer to set a request related to this response.
     /// - Note: Initializer can fail if it could not handle response body.
-    init?(request : Request, status: Int, body : Any)
+    init?(request : AnyRequest, status: Int, body : Any)
     
     /// Request related to the response.
-    var request : Request {get}
+    var request : AnyRequest {get}
     
     /// Status code returned by server.
     var status: Int { get }

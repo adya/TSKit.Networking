@@ -47,3 +47,8 @@ public extension EmptyResult {
 }
 
 public typealias AnyResponseResult = ResponseResult<AnyResponse>
+
+public typealias AnyResponseResultCompletion = (AnyResponseResult) -> Void
+
+public typealias ResponseResultCompletion<ResponseType> = (ResponseResult<ResponseType>) -> Void where ResponseType: AnyResponse
+
