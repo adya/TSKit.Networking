@@ -23,7 +23,7 @@ public protocol AnyNetworkService: class {
 
     /// Creates a requset call builder that constructs a valid `AnyRequestCall` object supported by the service.
     /// - Parameter request: A request for which a call will be constructed.
-    /// - Returns: A builder object that can contruct a call for specified `request`.
+    /// - Returns: A builder object that can construct a call for specified `request`.
     func builder(for request: AnyRequestable) -> AnyRequestCallBuilder
 
     /**
