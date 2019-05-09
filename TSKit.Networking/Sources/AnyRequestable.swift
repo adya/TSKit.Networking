@@ -29,7 +29,7 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// Overridden encoding methods for specified parameters.
     /// Allows to encode several params in a different way.
     /// - Note: Optional.
-    var parametersEncodings: [String : ParameterEncoding]? { get }
+    // var parametersEncodings: [String : ParameterEncoding]? { get }
 
     /// Custom headers to be attached to request.
     /// - Note: If header already defined in `AnyNetworkSercideConfiguration`
@@ -65,9 +65,9 @@ public extension AnyRequestable {
         return Set(200..<300)
     }
 
-    var parametersEncodings: [String : ParameterEncoding]? {
-        return nil
-    }
+    // var parametersEncodings: [String : ParameterEncoding]? {
+    //     return nil
+    // }
 
     var description: String {
         var descr = "\(self.method) '"
