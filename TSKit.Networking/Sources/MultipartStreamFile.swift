@@ -1,10 +1,12 @@
+/// - Since: 01/20/2018
+/// - Author: Arkadii Hlushchevskyi
+/// - Copyright: © 2018. Arkadii Hlushchevskyi.
+/// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
 import Foundation
 import TSKit_Core
 
 /// Streamed multipart file.
-/// - Version:     3.0
-/// - Since:       10/15/2018
-/// - Author:      Arkadii Hlushchevskyi
 public struct MultipartStreamFile: AnyMultipartFile {
 
     public let name: String

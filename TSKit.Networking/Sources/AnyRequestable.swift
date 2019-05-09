@@ -1,10 +1,9 @@
-/** 
- An object that describes a request to be performed.
- 
- - Version:     3.0
- - Since:       10/15/2018
- - Author:      Arkadii Hlushchevskyi
- */
+/// - Since: 01/20/2018
+/// - Author: Arkadii Hlushchevskyi
+/// - Copyright: © 2018. Arkadii Hlushchevskyi.
+/// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
+/// An object that describes a request to be performed.
 public protocol AnyRequestable: CustomStringConvertible {
 
     /// HTTP Method of the request.
@@ -50,7 +49,7 @@ public extension AnyRequestable {
     var headers: [String : String]? {
         return nil
     }
-    
+
     var parameters: [String : Any]? {
         return nil
     }

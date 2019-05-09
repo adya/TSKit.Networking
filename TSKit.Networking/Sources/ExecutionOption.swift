@@ -1,10 +1,9 @@
-/**
- Defines advanced behavior of `AnyNetworkService` when dealing with multiple requests.
- 
-- Version:     3.0
-- Since:       10/15/2018
-- Author:      Arkadii Hlushchevskyi
-*/
+/// - Since: 01/20/2018
+/// - Author: Arkadii Hlushchevskyi
+/// - Copyright: © 2018. Arkadii Hlushchevskyi.
+/// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
+/// Defines advanced behavior of `AnyNetworkService` when dealing with multiple requests.
 public enum ExecutionOption {
 
     /// Indicates that `AnyRequestManager` should execute each request call synchronously.

@@ -1,10 +1,12 @@
+/// - Since: 01/20/2018
+/// - Author: Arkadii Hlushchevskyi
+/// - Copyright: © 2018. Arkadii Hlushchevskyi.
+/// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
 import Foundation
 
 /// Object that provides an interface for construction of `AnyRequestCall` object.
 /// - Note: Builder resets itself after making a call.
-/// - Version:     3.0
-/// - Since:       10/15/2018
-/// - Author:      Arkadii Hlushchevskyi
 public protocol AnyRequestCallBuilder: class {
 
     init(request: AnyRequestable)
@@ -43,7 +45,7 @@ public protocol AnyRequestCallBuilder: class {
     /// - Parameter progress: An object that conveys ongoing progress for a given request.
     /// - Returns: Self.
     func progress(_ closure: @escaping (_ progress: Progress) -> Void) -> Self
-    
+
     /// Makes configured `AnyRequestCall` object.
     /// - Returns: Constructed object.
     func make() -> AnyRequestCall?

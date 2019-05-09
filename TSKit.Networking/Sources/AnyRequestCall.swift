@@ -1,12 +1,11 @@
-/**
- `AnyRequestCall` is an object that represents a single configured call of network request.
- 
- - Version:     3.0
- - Since:       10/15/2018
- - Author:      Arkadii Hlushchevskyi
- */
+/// - Since: 01/20/2018
+/// - Author: Arkadii Hlushchevskyi
+/// - Copyright: © 2018. Arkadii Hlushchevskyi.
+/// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
+/// `AnyRequestCall` is an object that represents a single configured call of network request.
 public protocol AnyRequestCall: class {
-    
+
     /// An object containing request configuration.
     var request: AnyRequestable { get }
 
