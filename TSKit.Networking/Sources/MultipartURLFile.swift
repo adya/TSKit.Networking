@@ -19,4 +19,11 @@ public struct MultipartURLFile: AnyMultipartFile {
     public var description: String {
         return "\(name) (File: \(fileName)). Type: \(mimeType) (Located at: \(url.path))."
     }
+    
+    public init(name: String, url: URL, fileName: String, mimeType: String) {
+        self.name = name
+        self.url = url
+        self.fileName = fileName
+        self.mimeType = mimeType
+    }
 }

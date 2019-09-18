@@ -20,4 +20,11 @@ public struct MultipartDataFile: AnyMultipartFile {
     public var description: String {
         return "\(name) (File: \(fileName)). Type: \(mimeType) (Data size: \(data.size.shortDescription))."
     }
+    
+    public init(name: String, data: Data, fileName: String, mimeType: String) {
+        self.name = name
+        self.data = data
+        self.fileName = fileName
+        self.mimeType = mimeType
+    }
 }

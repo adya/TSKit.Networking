@@ -22,4 +22,12 @@ public struct MultipartStreamFile: AnyMultipartFile {
     public var description: String {
         return "\(name) (File: \(fileName)). Type: \(mimeType) (Data size: \(DataSize(bytes: length).shortDescription)."
     }
+    
+    public init(name: String, stream: InputStream, fileName: String, mimeType: String, length: UInt64) {
+        self.name = name
+        self.stream = stream
+        self.fileName = fileName
+        self.mimeType = mimeType
+        self.length = length
+    }
 }

@@ -22,7 +22,7 @@ public protocol AnyRequestCallBuilder: class {
     /// - Returns: Self.
     func response<ResponseType, StatusSequenceType>(_ response: ResponseType.Type,
                                                     forStatuses statuses: StatusSequenceType,
-                                                    handler: @escaping ResponseResultCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == UInt
+                                                    handler: @escaping ResponseResultCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == Int
 
     /// Registers specified `handler` for response of given type.
     /// - Parameter response: Expected type of the response.
@@ -30,7 +30,7 @@ public protocol AnyRequestCallBuilder: class {
     /// - Parameter handler: A closure that receives deserialized response object.
     /// - Returns: Self.
     func response<ResponseType>(_ response: ResponseType.Type,
-                                forStatuses statuses: UInt...,
+                                forStatuses statuses: Int...,
                                 handler: @escaping ResponseResultCompletion<ResponseType>) -> Self where ResponseType: AnyResponse
 
     /// Registers specified `handler` for response of given type.
