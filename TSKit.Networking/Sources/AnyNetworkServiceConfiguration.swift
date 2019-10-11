@@ -3,6 +3,8 @@
 // - Copyright: © 2019. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
+import Foundation
+
 /// Defines configurable properties for `AnyNetworkService`
 public protocol AnyNetworkServiceConfiguration {
 

@@ -3,6 +3,8 @@
 // - Copyright: © 2019. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
+import Foundation
+
 /// An object that intercepts all responses that network service receives.
 public protocol AnyNetworkServiceInterceptor: class {
 
