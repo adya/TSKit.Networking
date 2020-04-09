@@ -43,15 +43,15 @@ public protocol AnyRequestable: CustomStringConvertible {
 public extension AnyRequestable {
 
     var host: String? {
-        return nil
+        nil
     }
 
     var headers: [String : String]? {
-        return nil
+        nil
     }
 
     var parameters: [String : Any]? {
-        return nil
+        nil
     }
 
     var encoding: ParameterEncoding {
@@ -61,12 +61,10 @@ public extension AnyRequestable {
         }
     }
 
-    var statusCodes: Set<Int> {
-        return Set(200..<300)
-    }
+    var statusCodes: Set<Int> { Set(200..<300) }
 
     // var parametersEncodings: [String : ParameterEncoding]? {
-    //     return nil
+    //     nil
     // }
 
     var description: String {

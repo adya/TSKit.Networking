@@ -22,15 +22,15 @@ public protocol AnyMultipartRequestable: AnyRequestable {
 public extension AnyMultipartRequestable {
 
     var files: [AnyMultipartFile]? {
-        return nil
+        nil
     }
 
     var parametersDataEncoding: String.Encoding {
-        return String.Encoding.utf8
+        .utf8
     }
 
     var encoding: ParameterEncoding {
-        return .formData
+        .formData
     }
 
     var description: String {
