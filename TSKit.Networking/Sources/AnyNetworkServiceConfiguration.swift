@@ -18,15 +18,20 @@ public protocol AnyNetworkServiceConfiguration {
     /// Defaults to the `default` session configuration object.
     var sessionConfiguration: URLSessionConfiguration { get }
 
+    /// When session is configured for background execution, you may specify a path
+    /// to the directory where session will save temporary files with responses.
+    /// - Note: Optional.
+    /// - Note: **Defaults** to system's `temporaryDirectory`.
+    var sessionTemporaryFilesDirectory: URL? { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
 
     var headers: [String : String]? {
-        return nil
+        nil
     }
 
     var sessionConfiguration: URLSessionConfiguration {
-        return .default
+        .default
     }
 }

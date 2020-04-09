@@ -135,21 +135,21 @@
 				00C2C4D41FE5C4E300721731 /* AnyNetworkService.swift */,
 				2D9E623712CC6B666AE58F9B /* AnyNetworkServiceConfiguration.swift */,
 				2D9E6961B8728613E29BB6AB /* ExecutionOption.swift */,
-				0050EFAC21752DD00080D150 /* AnyRequestable.swift */,
-				00C2C4D21FE5C4E300721731 /* AnyMultipartRequestable.swift */,
 				2D9E62F1AA365A6DF1BC3216 /* RequestMethod.swift */,
 				2D9E6C8AA1BD92ECE5540769 /* ParameterEncoding.swift */,
-				2D9E65BDEBAE7A8D2F6CD550 /* AnyMultipartFile.swift */,
 				007AFF082167FEDD00C96933 /* AnyResponse.swift */,
 				00C2C4D61FE5C4E300721731 /* AnyValueResponse.swift */,
 				00C2C4D31FE5C4E300721731 /* ResponseResult.swift */,
 				2D9E66B5D9B972C37F54BFB6 /* ResponseKind.swift */,
+				0050EFAC21752DD00080D150 /* AnyRequestable.swift */,
+				00C2C4D21FE5C4E300721731 /* AnyMultipartRequestable.swift */,
 				00BC01D121502EBE0009290B /* AnyRequestCall.swift */,
 				2D9E624517FD00DEB80E2952 /* AnyRequestCallBuilder.swift */,
+				00B9ACB22179182F002C6500 /* AnyNetworkServiceInterceptor.swift */,
+				2D9E65BDEBAE7A8D2F6CD550 /* AnyMultipartFile.swift */,
+				2D9E6197939D57729BBFC9AB /* MultipartURLFile.swift */,
 				2D9E6442D6FAE090F919178E /* MultipartDataFile.swift */,
 				2D9E61F923AA3284ED323B13 /* MultipartStreamFile.swift */,
-				2D9E6197939D57729BBFC9AB /* MultipartURLFile.swift */,
-				00B9ACB22179182F002C6500 /* AnyNetworkServiceInterceptor.swift */,
 				2D9E68329B76FA1445430D48 /* NetworkServiceError.swift */,
 			);
 			path = Sources;
@@ -511,6 +511,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.glar.tskit.networking;
 				PRODUCT_NAME = TSKit_Networking;
 				SKIP_INSTALL = NO;
@@ -536,6 +537,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.glar.tskit.networking;
 				PRODUCT_NAME = TSKit_Networking;
 				SKIP_INSTALL = NO;
