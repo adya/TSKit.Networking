@@ -1,6 +1,6 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2019. Arkadii Hlushchevskyi.
+// - Copyright: © 2020. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 /// `AnyRequestCall` is an object that represents a single configured call of network request.
