@@ -5,26 +5,16 @@
 
 import Foundation
 
-/// Represents result of the request with associated responded object.
-public enum ResponseResult<T: Any> {
+public typealias EmptyResponse = Result<Void, NetworkServiceError>
 
-    /// Response was successful and valid.
-    /// - Parameter response: A response object.
-    case success(response: T)
+public typealias AnyResponseCompletion = (AnyResponse) -> Void
 
-    /// Request failed with an error.
-    /// - Parameter error: Occurred error.
-    case failure(error: Error)
-}
+public typealias ResponseCompletion<ResponseType> = (ResponseType) -> Void where ResponseType: AnyResponse
 
-public typealias EmptyResponseResult = ResponseResult<Void>
+public typealias AnyErrorCompletion = (AnyNetworkServiceError) -> Void
 
-public typealias AnyResponseResult = ResponseResult<AnyResponse>
+public typealias ErrorCompletion<ErrorType> = (ErrorType) -> Void where ErrorType: AnyNetworkServiceBodyError
 
-public typealias AnyResponseResultCompletion = (AnyResponseResult) -> Void
-
-public typealias ResponseResultCompletion<ResponseType> = (ResponseResult<ResponseType>) -> Void where ResponseType: AnyResponse
-
-public typealias RequestCompletion = (EmptyResponseResult) -> Void
+public typealias RequestCompletion = (EmptyResponse) -> Void
 
 public typealias RequestProgressCompletion = (Progress) -> Void

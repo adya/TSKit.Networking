@@ -12,7 +12,8 @@ public protocol AnyResponse {
     /// - Note: Defaults to `.json`.
     static var kind: ResponseKind { get }
 
-    init?(response: HTTPURLResponse, body: Any?)
+    /// Initializes response object with given HTTP `response` and response's `body` that is converted to the type corresponding to `kind` of `AnyResponse`.
+    init(response: HTTPURLResponse, body: Any?) throws
 
     /// HTTP response returned by a service.
     var response: HTTPURLResponse { get }
