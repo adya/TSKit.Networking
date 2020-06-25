@@ -42,7 +42,7 @@ public protocol AnyRequestCallBuilder: class {
     func response<ResponseType>(_ response: ResponseType.Type,
                                 handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse
 
-    /// Registers specified `handler` to receive any errors produce by request call.
+    /// Registers specified `handler` to receive any errors produced by request call.
     /// - Parameter error: Type of the `error` object that will be passed to the handler.
     /// - Parameter handler: A closure that receives deserialized error object.
     func error<ErrorType>(_ error: ErrorType.Type,
@@ -58,4 +58,13 @@ public protocol AnyRequestCallBuilder: class {
     /// Makes configured `AnyRequestCall` object.
     /// - Returns: Constructed object.
     func make() -> AnyRequestCall?
+}
+
+public extension AnyRequestCallBuilder {
+    
+    /// Registers specified `handler` to receive any errors produced by request call using default `NetworkServiceError`.
+    /// - Parameter handler: A closure that receives deserialized error object.
+    func error(handler: @escaping ErrorCompletion<NetworkServiceError>) -> Self {
+        error(NetworkServiceError.self, handler: handler)
+    }
 }
