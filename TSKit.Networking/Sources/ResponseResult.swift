@@ -1,49 +1,20 @@
-/** 
- Represents result of the request with associated responded object.
- 
- - Requires:    iOS  [2.0; 8.0)
- - Requires:    Swift 2+
- - Version:     2.1
- - Since:       10/30/2016
- - Author:      AdYa
- */
-public enum ResponseResult <T: Any> {
-    
-    /// Response was successful and valid.
-    /// - Parameter response: a response object.
-    case success(response : T)
-    
-    /// Request failed with an error.
-    /// - Parameter error: Occurred error.
-    case failure(error : RequestError)
-}
+// - Since: 01/20/2018
+// - Author: Arkadii Hlushchevskyi
+// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
-/**
- Represents result of the request without any object.
+import Foundation
 
-- Requires:    iOS  [2.0; 8.0)
-- Requires:    Swift 2+
-- Version:     2.1
-- Since:       10/30/2016
-- Author:      AdYa
-*/
-public enum EmptyResult {
-    
-    /// Response was successful and valid.
-    case success
-    
-    /// Request failed with an error.
-    case failure(error : RequestError)
-}
+public typealias EmptyResponse = Result<Void, NetworkServiceError>
 
-// MARK: - Conversion
-public extension EmptyResult {
-    public init(responseResult : AnyResponseResult) {
-        switch responseResult {
-        case .success: self = .success
-        case .failure(let error): self = .failure(error: error)
-        }
-    }
-}
+public typealias AnyResponseCompletion = (AnyResponse) -> Void
 
-public typealias AnyResponseResult = ResponseResult<AnyResponse>
+public typealias ResponseCompletion<ResponseType> = (ResponseType) -> Void where ResponseType: AnyResponse
+
+public typealias AnyErrorCompletion = (AnyNetworkServiceError) -> Void
+
+public typealias ErrorCompletion<ErrorType> = (ErrorType) -> Void where ErrorType: AnyNetworkServiceBodyError
+
+public typealias RequestCompletion = (EmptyResponse) -> Void
+
+public typealias RequestProgressCompletion = (Progress) -> Void
