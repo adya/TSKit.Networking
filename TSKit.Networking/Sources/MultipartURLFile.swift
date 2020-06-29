@@ -4,6 +4,7 @@
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Foundation
+import TSKit_Core
 
 /// Multipart file stored in file system.
 public struct MultipartURLFile: AnyMultipartFile {
@@ -20,10 +21,10 @@ public struct MultipartURLFile: AnyMultipartFile {
         return "\(name) (File: \(fileName)). Type: \(mimeType) (Located at: \(url.path))."
     }
     
-    public init(name: String, url: URL, fileName: String, mimeType: String) {
+    public init(name: String, url: URL, fileName: String? = nil, mimeType: String? = nil) {
         self.name = name
         self.url = url
-        self.fileName = fileName
-        self.mimeType = mimeType
+        self.fileName = fileName ?? url.lastPathComponent
+        self.mimeType = mimeType ?? url.mimeType ?? "application/octet-stream"
     }
 }
