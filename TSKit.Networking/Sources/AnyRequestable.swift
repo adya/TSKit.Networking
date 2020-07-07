@@ -15,7 +15,13 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// * POST, PUT, PATCH -> .json
     var encoding: ParameterEncoding { get }
 
-    /// Overridden host which will be used instead of default host specified in network configuration.
+    /// Overriden encoding options that will be used instead of the one provided in `AnyNetworkServiceConfiguration`.
+    ///
+    /// Encoding options that customizes a way parameters values will be encoded.
+    /// - Note: Optional.
+    var encodingOptions: ParameterEncoding.Options? { get }
+    
+    /// Overridden host which will be used instead of default host specified in `AnyNetworkServiceConfiguration`.
     /// - Note: Optional.
     var host: String? { get }
 
@@ -51,6 +57,10 @@ public extension AnyRequestable {
     }
 
     var parameters: [String : Any]? {
+        nil
+    }
+    
+    var encodingOptions: ParameterEncoding.Options? {
         nil
     }
 

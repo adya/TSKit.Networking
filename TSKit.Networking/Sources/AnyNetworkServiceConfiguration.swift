@@ -23,6 +23,9 @@ public protocol AnyNetworkServiceConfiguration {
     /// - Note: Optional.
     /// - Note: **Defaults** to system's `temporaryDirectory`.
     var sessionTemporaryFilesDirectory: URL? { get }
+    
+    /// Encoding options that customizes a way parameters values will be encoded.
+    var encodingOptions: ParameterEncoding.Options { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
@@ -33,5 +36,9 @@ public extension AnyNetworkServiceConfiguration {
 
     var sessionConfiguration: URLSessionConfiguration {
         .default
+    }
+    
+    var encodingOptions: ParameterEncoding.Options {
+        .init()
     }
 }
