@@ -43,6 +43,8 @@ public protocol AnyRequestable: CustomStringConvertible {
     ///         request's headers will override configuration's headers.
     /// - Note: Optional.
     var headers: [String : String]? { get }
+    
+    var statusCodes: Set<Int> { get }
 }
 
 // MARK: - Defaults
