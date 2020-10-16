@@ -26,10 +26,16 @@ public protocol AnyNetworkServiceConfiguration {
     
     /// Encoding options that customizes a way parameters values will be encoded.
     var encodingOptions: ParameterEncoding.Options { get }
+    
+    /// Default timeout interval in seconds for all requests.
+    /// - Note: When set to `nil` default values from `URLSession` will be used.
+    var timeoutInterval: TimeInterval? { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
 
+    var timeoutInterval: TimeInterval? { nil }
+    
     var headers: [String : String]? {
         nil
     }

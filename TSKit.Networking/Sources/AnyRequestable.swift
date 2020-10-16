@@ -44,7 +44,15 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// - Note: Optional.
     var headers: [String : String]? { get }
     
+    /// A set of status codes that are valid for this request.
+    /// Any responses with status codes outside of that set will be considered as error and will trigger error handler.
+    /// - Note: If request call has associated response with status code that is not included in this set response will be handled as usual.
     var statusCodes: Set<Int> { get }
+    
+    /// Timeout interval in seconds for the request.
+    /// Request's `timeoutInterval` overwrites the one from configuration.
+    /// - Note: Oprional. When `nil` service will use configuration's `timeoutInterval` instead.
+    var timeoutInterval: TimeInterval? { get }
 }
 
 // MARK: - Defaults
@@ -72,6 +80,8 @@ public extension AnyRequestable {
         case .post, .put, .patch: return .json
         }
     }
+    
+    var timeoutInterval: TimeInterval? { nil }
 
     var statusCodes: Set<Int> { Set(200..<300) }
 
