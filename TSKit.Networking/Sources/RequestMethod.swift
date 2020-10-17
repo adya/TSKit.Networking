@@ -17,4 +17,8 @@ public enum RequestMethod {
     case patch
 
     case delete
+    
+    case trace
+    
+    case options
 }

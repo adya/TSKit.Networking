@@ -30,11 +30,37 @@ public protocol AnyNetworkServiceConfiguration {
     /// Default timeout interval in seconds for all requests.
     /// - Note: When set to `nil` default values from `URLSession` will be used.
     var timeoutInterval: TimeInterval? { get }
+    
+    /// HTTP Methods that should be retried according to the `configuration`.
+    ///
+    /// Defaults to `nil` which will fall back to all idempotent methods:
+    /// - GET
+    /// - HEAD
+    /// - DELETE
+    /// - OPTIONS
+    /// - PUT
+    /// - TRACE
+    var retriableMethods: Set<RequestMethod> { get }
+    
+    /// Number of attempts that request should be retried.
+    /// Defaults to `nil` which disables retrying.
+    var retryAttempts: UInt? { get }
+    
+    /// Set of errors that are considered to be recoverable with multiple retries.
+    /// Defaults to `nil` which falls back to predefined values.
+    /// - Note: `retriableFailures` from `Request`s overwrite the same property from `configuration`.
+    var retriableFailures: Set<URLError.Code>? { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
 
     var timeoutInterval: TimeInterval? { nil }
+    
+    var retryAttempts: UInt? { nil }
+    
+    var retriableFailures: Set<URLError.Code>? { nil }
+    
+    var retriableMethods: Set<RequestMethod> { [.get, .head, .delete, .options, .put, .trace] }
     
     var headers: [String : String]? {
         nil
