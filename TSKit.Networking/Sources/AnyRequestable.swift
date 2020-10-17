@@ -46,6 +46,7 @@ public protocol AnyRequestable: CustomStringConvertible {
     
     /// A set of status codes that are valid for this request.
     /// Any responses with status codes outside of that set will be considered as error and will trigger error handler.
+    /// Defaults to [200; 299] statuses.
     /// - Note: If request call has associated response with status code that is not included in this set response will be handled as usual.
     var statusCodes: Set<Int> { get }
     
@@ -53,6 +54,15 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// Request's `timeoutInterval` overwrites the one from configuration.
     /// - Note: Oprional. When `nil` service will use configuration's `timeoutInterval` instead.
     var timeoutInterval: TimeInterval? { get }
+    
+    /// Number of attempts that request should be retried.
+    /// Defaults to `nil` which indicates that global `configuration`'s value should be used.
+    var retryAttempts: UInt? { get }
+    
+    /// Set of errors that are considered to be recoverable with multiple retries.
+    /// Defaults to `nil` which falls back to default values defined in `configuartion`.
+    /// - Note: `retriableFailures` from `Request`s overwrite the same property from `configuration`.
+    var retriableFailures: Set<URLError.Code>? { get }
 }
 
 // MARK: - Defaults
@@ -82,6 +92,10 @@ public extension AnyRequestable {
     }
     
     var timeoutInterval: TimeInterval? { nil }
+    
+    var retryAttempts: UInt? { nil }
+    
+    var retriableFailures: Set<URLError.Code>? { nil }
 
     var statusCodes: Set<Int> { Set(200..<300) }
 
