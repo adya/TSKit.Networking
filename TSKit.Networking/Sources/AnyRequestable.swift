@@ -76,8 +76,8 @@ public extension AnyRequestable {
 
     var encoding: ParameterEncoding {
         switch self.method {
-        case .get, .head, .delete: return .url
-        case .post, .put, .patch: return .json
+            case .get, .head, .delete, .options, .trace: return .url
+            case .post, .put, .patch: return .json
         }
     }
     
