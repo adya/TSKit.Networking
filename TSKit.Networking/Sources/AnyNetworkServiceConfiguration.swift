@@ -46,6 +46,17 @@ public protocol AnyNetworkServiceConfiguration {
     /// Defaults to `nil` which disables retrying.
     var retryAttempts: UInt? { get }
     
+    /// Set of HTTP response statuses that should be retried.
+    /// - Note: Statuses defined in `AnyRequestable` take priority over statuses in `configuration`.
+    ///
+    /// Defaults to following set:
+    /// - 408 = Request Timeout
+    /// - 500 = Internal Server Error
+    /// - 502 = Bad Gateway
+    /// - 503 = Service Unavailable
+    /// - 504 = Gateway Timeout
+    var retriableStatuses: Set<Int>? { get }
+    
     /// Set of errors that are considered to be recoverable with multiple retries.
     /// Defaults to `nil` which falls back to predefined values.
     /// - Note: `retriableFailures` from `Request`s overwrite the same property from `configuration`.
@@ -59,6 +70,8 @@ public extension AnyNetworkServiceConfiguration {
     var retryAttempts: UInt? { nil }
     
     var retriableFailures: Set<URLError.Code>? { nil }
+    
+    var retriableStatuses: Set<Int>? { nil }
     
     var retriableMethods: Set<RequestMethod> { [.get, .head, .delete, .options, .put, .trace] }
     

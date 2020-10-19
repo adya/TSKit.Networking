@@ -55,6 +55,17 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// - Note: Oprional. When `nil` service will use configuration's `timeoutInterval` instead.
     var timeoutInterval: TimeInterval? { get }
     
+    /// Set of HTTP response statuses that should be retried.
+    /// - Note: Statuses defined in `AnyRequestable` take priority over statuses in `configuration`.
+    ///
+    /// Defaults to following set:
+    /// - 408 = Request Timeout
+    /// - 500 = Internal Server Error
+    /// - 502 = Bad Gateway
+    /// - 503 = Service Unavailable
+    /// - 504 = Gateway Timeout
+    var retriableStatuses: Set<Int>? { get }
+    
     /// Number of attempts that request should be retried.
     /// Defaults to `nil` which indicates that global `configuration`'s value should be used.
     var retryAttempts: UInt? { get }
@@ -96,6 +107,8 @@ public extension AnyRequestable {
     var retryAttempts: UInt? { nil }
     
     var retriableFailures: Set<URLError.Code>? { nil }
+    
+    var retriableStatuses: Set<Int>? { nil }
 
     var statusCodes: Set<Int> { Set(200..<300) }
 
