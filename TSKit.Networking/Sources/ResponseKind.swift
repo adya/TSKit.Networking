@@ -9,12 +9,16 @@ public enum ResponseKind {
     /// Response handles JSON.
     case json
 
-    /// Response handles NSData.
+    /// Response handles `Data`.
     case data
 
-    /// Response handles String.
+    /// Response handles `String`.
     case string
 
-    /// TSResponse handles no data.
+    /// Response ignores any data.
     case empty
+    
+    /// Response handles data downloaded as file.
+    /// `value` for such response will be a url for temporary file stored according to `configuration.sessionTemporaryFilesDirectory`.
+    case file
 }
