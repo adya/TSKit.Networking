@@ -16,15 +16,9 @@ public protocol AnyValueResponse: AnyResponse {
 // MARK: - Response Defaults
 public extension AnyValueResponse {
 
-    static var kind: ResponseKind {
-        return .json
-    }
+    static var kind: ResponseKind { .json }
 
     var description: String {
-        if let descr = self.value as? CustomStringConvertible {
-            return "Value: \(descr)"
-        } else {
-            return "Value: \(String(describing: self.value))"
-        }
+        "Value: \(String(describing: self.value))"
     }
 }
