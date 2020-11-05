@@ -10,6 +10,8 @@
 		0050EFAD21752DD00080D150 /* AnyRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0050EFAC21752DD00080D150 /* AnyRequestable.swift */; };
 		007AFF092167FEDD00C96933 /* AnyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007AFF082167FEDD00C96933 /* AnyResponse.swift */; };
 		007DF11F2350FEB0005F51F1 /* TSKit_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 007DF11E2350FEB0005F51F1 /* TSKit_Core.framework */; };
+		0087D2BD25405AE6000D6BFD /* AnyFileRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0087D2BC25405AE6000D6BFD /* AnyFileRequestable.swift */; };
+		0087D2C12541D245000D6BFD /* AnyFileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0087D2C02541D245000D6BFD /* AnyFileResponse.swift */; };
 		00B9ACB32179182F002C6500 /* AnyNetworkServiceInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9ACB22179182F002C6500 /* AnyNetworkServiceInterceptor.swift */; };
 		00BC01D221502EBE0009290B /* AnyRequestCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BC01D121502EBE0009290B /* AnyRequestCall.swift */; };
 		00C2C4801FE5C45C00721731 /* TSKit_Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 00C2C4721FE5C45C00721731 /* TSKit_Networking.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,6 +38,8 @@
 		007AFF082167FEDD00C96933 /* AnyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyResponse.swift; sourceTree = "<group>"; };
 		007DF11E2350FEB0005F51F1 /* TSKit_Core.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSKit_Core.framework; path = Carthage/Build/iOS/TSKit_Core.framework; sourceTree = "<group>"; };
 		007DF1262350FEF0005F51F1 /* TSKit_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TSKit_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0087D2BC25405AE6000D6BFD /* AnyFileRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyFileRequestable.swift; sourceTree = "<group>"; };
+		0087D2C02541D245000D6BFD /* AnyFileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyFileResponse.swift; sourceTree = "<group>"; };
 		00B9ACB22179182F002C6500 /* AnyNetworkServiceInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyNetworkServiceInterceptor.swift; sourceTree = "<group>"; };
 		00BC01D121502EBE0009290B /* AnyRequestCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRequestCall.swift; sourceTree = "<group>"; };
 		00C2C46F1FE5C45C00721731 /* TSKit_Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TSKit_Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,10 +112,12 @@
 				2D9E6C8AA1BD92ECE5540769 /* ParameterEncoding.swift */,
 				007AFF082167FEDD00C96933 /* AnyResponse.swift */,
 				00C2C4D61FE5C4E300721731 /* AnyValueResponse.swift */,
+				0087D2C02541D245000D6BFD /* AnyFileResponse.swift */,
 				00C2C4D31FE5C4E300721731 /* ResponseResult.swift */,
 				2D9E66B5D9B972C37F54BFB6 /* ResponseKind.swift */,
 				0050EFAC21752DD00080D150 /* AnyRequestable.swift */,
 				00C2C4D21FE5C4E300721731 /* AnyMultipartRequestable.swift */,
+				0087D2BC25405AE6000D6BFD /* AnyFileRequestable.swift */,
 				00BC01D121502EBE0009290B /* AnyRequestCall.swift */,
 				2D9E624517FD00DEB80E2952 /* AnyRequestCallBuilder.swift */,
 				00B9ACB22179182F002C6500 /* AnyNetworkServiceInterceptor.swift */,
@@ -214,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0087D2BD25405AE6000D6BFD /* AnyFileRequestable.swift in Sources */,
 				007AFF092167FEDD00C96933 /* AnyResponse.swift in Sources */,
 				00B9ACB32179182F002C6500 /* AnyNetworkServiceInterceptor.swift in Sources */,
 				00C2C4DC1FE5C4E300721731 /* AnyNetworkService.swift in Sources */,
@@ -233,6 +240,7 @@
 				2D9E6BAB59B177D1B61DFC53 /* MultipartStreamFile.swift in Sources */,
 				2D9E6C91CFFFE62A1AA57342 /* MultipartURLFile.swift in Sources */,
 				2D9E66B2223C35F3C0711267 /* NetworkServiceErrorReason.swift in Sources */,
+				0087D2C12541D245000D6BFD /* AnyFileResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
