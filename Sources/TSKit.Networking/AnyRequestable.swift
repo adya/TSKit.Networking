@@ -3,6 +3,8 @@
 // - Copyright: © 2020. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
+import Foundation
+
 /// An object that describes a request to be performed.
 public protocol AnyRequestable: CustomStringConvertible {
 
