@@ -1,7 +1,12 @@
+// - Since: 06/11/2021
+// - Author: Arkadii Hlushchevskyi
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
+// - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
 import Foundation
 
 /// A simple recoverer that
-public class RetryRecoverer: AnyNetworkServiceRecoverer {
+open class RetryRecoverer: AnyNetworkServiceRecoverer {
     
     /// HTTP Methods that should be retried.
     ///
@@ -12,14 +17,14 @@ public class RetryRecoverer: AnyNetworkServiceRecoverer {
     /// - OPTIONS
     /// - PUT
     /// - TRACE
-    var retriableMethods: Set<RequestMethod>
+    public var retriableMethods: Set<RequestMethod>
     
     /// Number of attempts that request should be retried.
     ///
     /// Setting this value to `0` efffectively disables this recoverer.
     /// Defaults to 1.
     /// - Note: If set, `AnyRequestable.maximumRecoveryAttempts` take precedence over this property.
-    var retryAttempts: UInt
+    public var retryAttempts: UInt
     
     /// Set of HTTP response statuses that should be retried.
     /// - Note: If set, `AnyRequestable.recoverableStatuses` take precedence over this property.
@@ -30,12 +35,12 @@ public class RetryRecoverer: AnyNetworkServiceRecoverer {
     /// - 502 = Bad Gateway
     /// - 503 = Service Unavailable
     /// - 504 = Gateway Timeout
-    var retriableStatuses: Set<Int>?
+    public var retriableStatuses: Set<Int>?
     
     /// Set of errors that are considered to be recoverable with multiple retries.
     /// Defaults to `nil` which falls back to predefined values.
     /// - Note: If set, `AnyRequestable.recoverableFailures` take precedence over this property.
-    var retriableFailures: Set<URLError.Code>?
+    public var retriableFailures: Set<URLError.Code>?
     
     public init(retriableMethods: Set<RequestMethod> = [.get, .head, .delete, .options, .put, .trace],
                 retriableStatuses: Set<Int>? = nil,
@@ -47,7 +52,7 @@ public class RetryRecoverer: AnyNetworkServiceRecoverer {
         self.retryAttempts = retryAttempts
     }
     
-    public func canRecover(call: AnyRequestCall,
+    open func canRecover(call: AnyRequestCall,
                            response: HTTPURLResponse?,
                            error: URLError?,
                            in service: AnyNetworkService) -> Bool {
@@ -71,7 +76,7 @@ public class RetryRecoverer: AnyNetworkServiceRecoverer {
                         response: HTTPURLResponse?,
                         error: URLError?,
                         in service: AnyNetworkService,
-                        _ completion: ((Bool) -> Void)) {
+                        _ completion: @escaping RecoveryCompletion) {
         completion(true)
     }
 }

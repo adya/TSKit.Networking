@@ -47,9 +47,11 @@ public protocol AnyRequestable: CustomStringConvertible {
     var headers: [String : String]? { get }
     
     /// A set of status codes that are valid for this request.
+    ///
     /// Any responses with status codes outside of that set will be considered as error and will trigger error handler.
     /// Defaults to [200; 299] statuses.
-    /// - Note: If request call has associated response with status code that is not included in this set response will be handled as usual.
+    /// - Note: If request call has associated response with status code that is not included in this set it will expand this range and response will be handled as usual.
+    ///         Use `AnyRequestCall.validStatuses` to get a list of all statuses that are allowed for the call.
     var statusCodes: Set<Int> { get }
     
     /// Timeout interval in seconds for the request.

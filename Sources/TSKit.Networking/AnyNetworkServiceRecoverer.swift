@@ -13,7 +13,7 @@ public protocol AnyNetworkServiceRecoverer: AnyObject {
     /// - Returns: Decision for recovery.
     func canRecover(call: AnyRequestCall, response: HTTPURLResponse?, error: URLError?, in service: AnyNetworkService) -> Bool
     
-    func recover(call: AnyRequestCall, response: HTTPURLResponse?, error: URLError?, in service: AnyNetworkService, _ completion: (RecoveryCompletion))
+    func recover(call: AnyRequestCall, response: HTTPURLResponse?, error: URLError?, in service: AnyNetworkService, _ completion: @escaping RecoveryCompletion)
 }
 
 public typealias RecoveryCompletion = (Bool) -> Void

@@ -12,6 +12,11 @@ public protocol AnyRequestCall: AnyObject {
     /// Number of recovery attempts that were made for this call.
     var recoveryAttempts: Int { get }
     
+    /// All statuses that are valid for this call.
+    ///
+    /// This set is a union of all statuses for which handlers were configured in this call and additionally all valid statuses listed in request.
+    var validStatuses: Set<Int> { get }
+    
     /// Cancels request call either by cancelling dispatching of the request if it was not dispatched yet or
     /// by suppressing any response that will be received for that request.
     func cancel()
