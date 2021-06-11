@@ -1,12 +1,12 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Dispatch
 
 /// Network service used to perform and manage lifecycle of multiple service calls.
-public protocol AnyNetworkService: class {
+public protocol AnyNetworkService: AnyObject {
 
     /// The background completion handler closure provided by the `UIApplicationDelegate`'s
     /// `application:handleEventsForBackgroundURLSession:completionHandler:` method.

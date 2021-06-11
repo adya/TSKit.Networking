@@ -1,13 +1,13 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Foundation
 
 /// Object that provides an interface for construction of `AnyRequestCall` object.
 /// - Note: Builder resets itself after making a call.
-public protocol AnyRequestCallBuilder: class {
+public protocol AnyRequestCallBuilder: AnyObject {
 
     init(request: AnyRequestable)
 
