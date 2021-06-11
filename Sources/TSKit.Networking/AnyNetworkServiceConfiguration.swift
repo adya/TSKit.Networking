@@ -31,59 +31,26 @@ public protocol AnyNetworkServiceConfiguration {
     /// - Note: When set to `nil` default values from `URLSession` will be used.
     var timeoutInterval: TimeInterval? { get }
     
-    /// HTTP Methods that should be retried according to the `configuration`.
-    ///
-    /// Defaults to `nil` which will fall back to all idempotent methods:
-    /// - GET
-    /// - HEAD
-    /// - DELETE
-    /// - OPTIONS
-    /// - PUT
-    /// - TRACE
-    var retriableMethods: Set<RequestMethod> { get }
-    
-    /// Number of attempts that request should be retried.
-    /// Defaults to `nil` which disables retrying.
-    var retryAttempts: UInt? { get }
-    
-    /// Set of HTTP response statuses that should be retried.
+    /// Set of HTTP response statuses that are considered recoverable.
     /// - Note: Statuses defined in `AnyRequestable` take priority over statuses in `configuration`.
-    ///
-    /// Defaults to following set:
-    /// - 408 = Request Timeout
-    /// - 500 = Internal Server Error
-    /// - 502 = Bad Gateway
-    /// - 503 = Service Unavailable
-    /// - 504 = Gateway Timeout
-    var retriableStatuses: Set<Int>? { get }
+    var recoverableStatuses: Set<Int>? { get }
     
-    /// Set of errors that are considered to be recoverable with multiple retries.
-    /// Defaults to `nil` which falls back to predefined values.
-    /// - Note: `retriableFailures` from `Request`s overwrite the same property from `configuration`.
-    var retriableFailures: Set<URLError.Code>? { get }
+    /// Number of attempts that request can be recovered.
+    /// Defaults to `1`.
+    var recoveryAttempts: UInt { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
 
     var timeoutInterval: TimeInterval? { nil }
+        
+    var recoverableStatuses: Set<Int>? { nil }
     
-    var retryAttempts: UInt? { nil }
-    
-    var retriableFailures: Set<URLError.Code>? { nil }
-    
-    var retriableStatuses: Set<Int>? { nil }
-    
-    var retriableMethods: Set<RequestMethod> { [.get, .head, .delete, .options, .put, .trace] }
-    
-    var headers: [String : String]? {
-        nil
-    }
+    var headers: [String : String]? { nil }
 
-    var sessionConfiguration: URLSessionConfiguration {
-        .default
-    }
+    var sessionConfiguration: URLSessionConfiguration { .default }
     
-    var encodingOptions: ParameterEncoding.Options {
-        .init()
-    }
+    var encodingOptions: ParameterEncoding.Options { .init() }
+    
+    var recoveryAttempts: UInt { 1 }
 }

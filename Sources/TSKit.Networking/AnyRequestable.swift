@@ -57,25 +57,17 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// - Note: Oprional. When `nil` service will use configuration's `timeoutInterval` instead.
     var timeoutInterval: TimeInterval? { get }
     
-    /// Set of HTTP response statuses that should be retried.
-    /// - Note: Statuses defined in `AnyRequestable` take priority over statuses in `configuration`.
-    ///
-    /// Defaults to following set:
-    /// - 408 = Request Timeout
-    /// - 500 = Internal Server Error
-    /// - 502 = Bad Gateway
-    /// - 503 = Service Unavailable
-    /// - 504 = Gateway Timeout
-    var retriableStatuses: Set<Int>? { get }
-    
-    /// Number of attempts that request should be retried.
-    /// Defaults to `nil` which indicates that global `configuration`'s value should be used.
-    var retryAttempts: UInt? { get }
+    /// Maximum number of attempts that failed request can be retried before.
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var maximumRecoveryAttempts: UInt? { get }
     
     /// Set of errors that are considered to be recoverable with multiple retries.
-    /// Defaults to `nil` which falls back to default values defined in `configuartion`.
-    /// - Note: `retriableFailures` from `Request`s overwrite the same property from `configuration`.
-    var retriableFailures: Set<URLError.Code>? { get }
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var recoverableFailures: Set<URLError.Code>? { get }
+    
+    /// Set of HTTP response statuses that are considered recoverable.
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var recoverableStatuses: Set<Int>? { get }
 }
 
 // MARK: - Defaults
@@ -106,11 +98,11 @@ public extension AnyRequestable {
     
     var timeoutInterval: TimeInterval? { nil }
     
-    var retryAttempts: UInt? { nil }
+    var maximumRecoveryAttempts: UInt? { nil }
     
-    var retriableFailures: Set<URLError.Code>? { nil }
-    
-    var retriableStatuses: Set<Int>? { nil }
+    var recoverableFailures: Set<URLError.Code>? { nil }
+        
+    var recoverableStatuses: Set<Int>? { nil }
 
     var statusCodes: Set<Int> { Set(200..<300) }
 

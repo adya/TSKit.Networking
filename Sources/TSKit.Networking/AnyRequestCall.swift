@@ -9,6 +9,9 @@ public protocol AnyRequestCall: AnyObject {
     /// An object containing request configuration.
     var request: AnyRequestable { get }
 
+    /// Number of recovery attempts that were made for this call.
+    var recoveryAttempts: Int { get }
+    
     /// Cancels request call either by cancelling dispatching of the request if it was not dispatched yet or
     /// by suppressing any response that will be received for that request.
     func cancel()
