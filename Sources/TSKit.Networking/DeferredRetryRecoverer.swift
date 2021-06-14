@@ -8,10 +8,10 @@ import TSKit_Core
 
 /// A variation of `RetryRecoverer` that is designed to defer recovery of all calls that fail with the same status code. This class is meant to be subclassed in order to perform meaningful recovery.
 ///
-/// `DeferredRetryRecoverer` will attempt recovery only for the first occurence of the call failing with the same status.
-/// All subsequent calls for the same status code will wait until existing recovery finishes and will retry along with initial call.
+/// At all times there is only one recovery process for the same HTTP status code: the first request that fails with a specific status code initiates the recovery.
+/// All subsequent calls that fail with the same status code will wait until existing recovery is finished, and then will be retried accordingly.
 ///
-/// In most cases subclasses should only override `attemptRecovery(for:,response,error,in:)` to provide custom recovery actions.
+/// In most cases subclasses should only override `attemptRecovery(for:response:error:in:)` to provide custom recovery actions.
 /// - Note: Default implementation does not recovery and behaves like `RetryRecoverer`.
 open class DeferredRetryRecoverer: RetryRecoverer {
     
@@ -40,6 +40,9 @@ open class DeferredRetryRecoverer: RetryRecoverer {
     ///
     /// Subclasses should override this method to perform custom actions needed for recovery.
     /// Make sure to call `compltion` with flag indicating whether recovery was successful or not.
+    ///
+    /// - Note: Base implementation of this method does nothing and immediately reports successful recovery completion.
+    ///
     /// - Parameter call: A request call that encountered an error.
     /// - Parameter response: An `HTTPURLResponse` received along with error.
     /// - Parameter error: An `URLError` describing occurred error.

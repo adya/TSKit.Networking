@@ -16,26 +16,15 @@ public protocol AnyNetworkService: AnyObject {
     @available(*, deprecated, message: "Background sessions are not supported")
     var backgroundSessionCompletionHandler: (() -> Void)? { get set }
 
-    /// Mandatory initializer with configuration object.
-    /// - Parameter configuration: An object that is used to configure `AnyNetworkService` for specific server.
-    init(configuration: AnyNetworkServiceConfiguration)
-
     /// Interceptors receiving each response.
     /// - Note: Response will be skipped if at least one of interceptors returned `false`.
-    var interceptors: [AnyNetworkServiceInterceptor]? { get set }
+    var interceptors: [AnyNetworkServiceInterceptor] { get set }
     
     /// Recoverer will attempt to recover failing requests by performing custom actions.
     ///
-    /// `AnyNetworkService` uses recoverer's `canRecover(call:,response:error:)` to determine suitable recoverer that will handle recovery.
-    /// Order at which recoverers are placed in this array determines their priority. The first recoverer that will return `true` in `canRecover(call:,response:error:)` will be responsible for recovering failing request.
-    ///
-    /// At all times there is only one recovery process for the same HTTP status code: the first request that fails with a specific status code initiates the recovery.
-    /// All subsequent calls that fail with the same status code will wait until existing recovery is finished, and then will be retried accordingly.
-    /// - Note: Number of attempts to recover the same call is limited by `AnyNetworkServiceConfiguration.recoveryAttempts`.
-    ///         Once it is exceeded call will fail.
-    /// - Important: An attempt to recover a request will only be made if received status code or error
-    ///              ia listed in `retriableStatuses` or  `retriableFailures` respectively.
-    var recoverers: [AnyNetworkServiceRecoverer]? { get set }
+    /// `AnyNetworkService` uses recoverer's `canRecover(call:response:error:in:)` to determine suitable recoverer that will handle recovery.
+    /// Order at which recoverers are placed in this array determines their priority. The first recoverer that will return `true` in `canRecover(call:response:error:in:)` will be responsible for recovering failing request.
+    var recoverers: [AnyNetworkServiceRecoverer] { get set }
 
     /// Creates a request call builder that constructs a valid `AnyRequestCall` object supported by the service.
     /// - Parameter request: A request for which a call will be constructed.
