@@ -12,6 +12,8 @@ public protocol AnyNetworkService: AnyObject {
     /// `application:handleEventsForBackgroundURLSession:completionHandler:` method.
     /// By setting the background completion handler, the `SessionDelegate`'s
     /// `sessionDidFinishEventsForBackgroundURLSession` closure implementation will automatically call the handler.
+    /// - Important: Background sessions **are not supported**. `TSKit.Networking` is designed for simple foreground networking.
+    @available(*, deprecated, message: "Background sessions are not supported")
     var backgroundSessionCompletionHandler: (() -> Void)? { get set }
 
     /// Mandatory initializer with configuration object.

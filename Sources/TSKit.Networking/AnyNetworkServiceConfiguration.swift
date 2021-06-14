@@ -30,14 +30,6 @@ public protocol AnyNetworkServiceConfiguration {
     /// Default timeout interval in seconds for all requests.
     /// - Note: When set to `nil` default values from `URLSession` will be used.
     var timeoutInterval: TimeInterval? { get }
-    
-    /// Set of HTTP response statuses that are considered recoverable.
-    /// - Note: Statuses defined in `AnyRequestable` take priority over statuses in `configuration`.
-    var recoverableStatuses: Set<Int>? { get }
-    
-    /// Number of attempts that request can be recovered.
-    /// Defaults to `1`.
-    var recoveryAttempts: UInt { get }
 }
 
 public extension AnyNetworkServiceConfiguration {
@@ -51,6 +43,4 @@ public extension AnyNetworkServiceConfiguration {
     var sessionConfiguration: URLSessionConfiguration { .default }
     
     var encodingOptions: ParameterEncoding.Options { .init() }
-    
-    var recoveryAttempts: UInt { 1 }
 }

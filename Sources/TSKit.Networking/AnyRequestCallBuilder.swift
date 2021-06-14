@@ -23,7 +23,7 @@ public protocol AnyRequestCallBuilder: AnyObject {
     /// - Returns: Self.
     func response<ResponseType, StatusSequenceType>(_ response: ResponseType.Type,
                                                     forStatuses statuses: StatusSequenceType,
-                                                    handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == Int
+                                                    handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == HTTPStatusCode
 
     /// Registers specified `handler` for response of given type.
     /// - Note: Provided `statuses` must be a subset of `request.statusCodes` for which call is being built.
@@ -32,7 +32,7 @@ public protocol AnyRequestCallBuilder: AnyObject {
     /// - Parameter handler: A closure that receives deserialized response object.
     /// - Returns: Self.
     func response<ResponseType>(_ response: ResponseType.Type,
-                                forStatuses statuses: Int...,
+                                forStatuses statuses: HTTPStatusCode...,
                                 handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse
 
     /// Registers specified `handler` for response of given type that is valid for all HTTP status codes acceptable by `request`.

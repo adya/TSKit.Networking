@@ -52,7 +52,7 @@ public protocol AnyRequestable: CustomStringConvertible {
     /// Defaults to [200; 299] statuses.
     /// - Note: If request call has associated response with status code that is not included in this set it will expand this range and response will be handled as usual.
     ///         Use `AnyRequestCall.validStatuses` to get a list of all statuses that are allowed for the call.
-    var statusCodes: Set<Int> { get }
+    var statusCodes: Set<HTTPStatusCode> { get }
     
     /// Timeout interval in seconds for the request.
     /// Request's `timeoutInterval` overwrites the one from configuration.
@@ -69,7 +69,7 @@ public protocol AnyRequestable: CustomStringConvertible {
     
     /// Set of HTTP response statuses that are considered recoverable.
     /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
-    var recoverableStatuses: Set<Int>? { get }
+    var recoverableStatuses: Set<HTTPStatusCode>? { get }
 }
 
 // MARK: - Defaults
@@ -104,9 +104,9 @@ public extension AnyRequestable {
     
     var recoverableFailures: Set<URLError.Code>? { nil }
         
-    var recoverableStatuses: Set<Int>? { nil }
+    var recoverableStatuses: Set<HTTPStatusCode>? { nil }
 
-    var statusCodes: Set<Int> { Set(200..<300) }
+    var statusCodes: Set<HTTPStatusCode> { Set(200..<300) }
 
     // var parametersEncodings: [String : ParameterEncoding]? {
     //     nil
