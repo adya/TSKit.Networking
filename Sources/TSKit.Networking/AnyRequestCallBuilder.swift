@@ -1,13 +1,13 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Foundation
 
 /// Object that provides an interface for construction of `AnyRequestCall` object.
 /// - Note: Builder resets itself after making a call.
-public protocol AnyRequestCallBuilder: class {
+public protocol AnyRequestCallBuilder: AnyObject {
 
     init(request: AnyRequestable)
 
@@ -23,7 +23,7 @@ public protocol AnyRequestCallBuilder: class {
     /// - Returns: Self.
     func response<ResponseType, StatusSequenceType>(_ response: ResponseType.Type,
                                                     forStatuses statuses: StatusSequenceType,
-                                                    handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == Int
+                                                    handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse, StatusSequenceType: Sequence, StatusSequenceType.Element == HTTPStatusCode
 
     /// Registers specified `handler` for response of given type.
     /// - Note: Provided `statuses` must be a subset of `request.statusCodes` for which call is being built.
@@ -32,7 +32,7 @@ public protocol AnyRequestCallBuilder: class {
     /// - Parameter handler: A closure that receives deserialized response object.
     /// - Returns: Self.
     func response<ResponseType>(_ response: ResponseType.Type,
-                                forStatuses statuses: Int...,
+                                forStatuses statuses: HTTPStatusCode...,
                                 handler: @escaping ResponseCompletion<ResponseType>) -> Self where ResponseType: AnyResponse
 
     /// Registers specified `handler` for response of given type that is valid for all HTTP status codes acceptable by `request`.

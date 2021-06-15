@@ -1,7 +1,9 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
+import Foundation
 
 /// An object that describes a request to be performed.
 public protocol AnyRequestable: CustomStringConvertible {
@@ -45,14 +47,29 @@ public protocol AnyRequestable: CustomStringConvertible {
     var headers: [String : String]? { get }
     
     /// A set of status codes that are valid for this request.
+    ///
     /// Any responses with status codes outside of that set will be considered as error and will trigger error handler.
-    /// - Note: If request call has associated response with status code that is not included in this set response will be handled as usual.
-    var statusCodes: Set<Int> { get }
+    /// Defaults to [200; 299] statuses.
+    /// - Note: If request call has associated response with status code that is not included in this set it will expand this range and response will be handled as usual.
+    ///         Use `AnyRequestCall.validStatuses` to get a list of all statuses that are allowed for the call.
+    var statusCodes: Set<HTTPStatusCode> { get }
     
     /// Timeout interval in seconds for the request.
     /// Request's `timeoutInterval` overwrites the one from configuration.
     /// - Note: Oprional. When `nil` service will use configuration's `timeoutInterval` instead.
     var timeoutInterval: TimeInterval? { get }
+    
+    /// Maximum number of attempts that failed request can be retried before.
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var maximumRecoveryAttempts: UInt? { get }
+    
+    /// Set of errors that are considered to be recoverable with multiple retries.
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var recoverableFailures: Set<URLError.Code>? { get }
+    
+    /// Set of HTTP response statuses that are considered recoverable.
+    /// Defaults to `nil` which indicates that `AnyNetworkServiceRecoverer` that will perform recovery will determine that value.
+    var recoverableStatuses: Set<HTTPStatusCode>? { get }
 }
 
 // MARK: - Defaults
@@ -76,14 +93,20 @@ public extension AnyRequestable {
 
     var encoding: ParameterEncoding {
         switch self.method {
-        case .get, .head, .delete: return .url
-        case .post, .put, .patch: return .json
+            case .get, .head, .delete, .options, .trace: return .url
+            case .post, .put, .patch: return .json
         }
     }
     
     var timeoutInterval: TimeInterval? { nil }
+    
+    var maximumRecoveryAttempts: UInt? { nil }
+    
+    var recoverableFailures: Set<URLError.Code>? { nil }
+        
+    var recoverableStatuses: Set<HTTPStatusCode>? { nil }
 
-    var statusCodes: Set<Int> { Set(200..<300) }
+    var statusCodes: Set<HTTPStatusCode> { Set(200..<300) }
 
     // var parametersEncodings: [String : ParameterEncoding]? {
     //     nil

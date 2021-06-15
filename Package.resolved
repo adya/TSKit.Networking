@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TSKit.Core",
+        "repositoryURL": "https://github.com/adya/TSKit.Core.git",
+        "state": {
+          "branch": null,
+          "revision": "382a7131e143d20d8d39d717f7c3b00b4b82e433",
+          "version": "2.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,7 +1,9 @@
 // - Since: 10/22/2020
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
+
+import Foundation
 
 /// A response object containing path for file downloaded from service.
 public protocol AnyFileResponse: AnyResponse {

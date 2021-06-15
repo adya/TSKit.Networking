@@ -1,6 +1,6 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Foundation
@@ -16,6 +16,9 @@ public protocol AnyNetworkServiceError: Error {
     /// Additional underlying error produced by the service.
     var error: Error? { get }
     
+    /// Additional underlying error produced by `URLSession`.
+    var sessionError: Error? { get }
+    
     /// Reason why the error was produced.
     var reason: NetworkServiceErrorReason { get }
     
@@ -24,6 +27,7 @@ public protocol AnyNetworkServiceError: Error {
     init(request: AnyRequestable,
          response: HTTPURLResponse?,
          error: Error?,
+         sessionError: Error?,
          reason: NetworkServiceErrorReason,
          body: Any?)
 }
@@ -51,16 +55,20 @@ public struct NetworkServiceError: Error, AnyNetworkServiceBodyError {
     
     public let error: Error?
     
+    public let sessionError: Error?
+    
     public let reason: NetworkServiceErrorReason
     
     public init(request: AnyRequestable,
                 response: HTTPURLResponse?,
                 error: Error?,
+                sessionError: Error?,
                 reason: NetworkServiceErrorReason,
                 body: Any?) {
         self.request = request
         self.response = response
         self.error = error
+        self.sessionError = sessionError
         self.body = body
         self.reason = reason
     }

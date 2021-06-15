@@ -1,6 +1,6 @@
 // - Since: 01/20/2018
 // - Author: Arkadii Hlushchevskyi
-// - Copyright: © 2020. Arkadii Hlushchevskyi.
+// - Copyright: © 2021. Arkadii Hlushchevskyi.
 // - Seealso: https://github.com/adya/TSKit.Networking/blob/master/LICENSE.md
 
 import Foundation
@@ -35,16 +35,12 @@ public protocol AnyNetworkServiceConfiguration {
 public extension AnyNetworkServiceConfiguration {
 
     var timeoutInterval: TimeInterval? { nil }
+        
+    var recoverableStatuses: Set<Int>? { nil }
     
-    var headers: [String : String]? {
-        nil
-    }
+    var headers: [String : String]? { nil }
 
-    var sessionConfiguration: URLSessionConfiguration {
-        .default
-    }
+    var sessionConfiguration: URLSessionConfiguration { .default }
     
-    var encodingOptions: ParameterEncoding.Options {
-        .init()
-    }
+    var encodingOptions: ParameterEncoding.Options { .init() }
 }
