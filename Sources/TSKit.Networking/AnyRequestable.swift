@@ -6,14 +6,14 @@
 import Foundation
 
 /// An object that describes a request to be performed.
-public protocol AnyRequestable: CustomStringConvertible {
+public protocol AnyRequestable: CustomStringConvertible, CustomDebugStringConvertible {
 
     /// HTTP Method of the request.
     var method: RequestMethod { get }
 
     /// Encoding method used to encode request parameters.
     /// - Note: Default encoding is determined by HTTP Method:
-    /// * GET, HEAD, DELETE -> .url
+    /// * GET, HEAD, DELETE, OPTIONS, TRACE -> .url
     /// * POST, PUT, PATCH -> .json
     var encoding: ParameterEncoding { get }
 
@@ -45,6 +45,18 @@ public protocol AnyRequestable: CustomStringConvertible {
     ///         request's headers will override configuration's headers.
     /// - Note: Optional.
     var headers: [String : String]? { get }
+    
+    /// Header names that are considered sensitive and should be excluded from request's description.
+    ///
+    /// Headers listed as sensitive are excluded from default `description` representation of `AnyRequestable` objects.
+    /// - Note: This does not affect `debugDescription` representation, which will list all headers.
+    var sensitiveHeaders: Set<String>? { get }
+    
+    /// Parameter names that are considered sensitive and should be excluded from request's description.
+    ///
+    /// Parameters listed as sensitive are excluded from default `description` representation of `AnyRequestable` objects.
+    /// - Note: This does not affect `debugDescription` representation, which will list all parameters.
+    var sensitiveParameters: Set<String>? { get }
     
     /// A set of status codes that are valid for this request.
     ///
@@ -107,12 +119,39 @@ public extension AnyRequestable {
     var recoverableStatuses: Set<HTTPStatusCode>? { nil }
 
     var statusCodes: Set<HTTPStatusCode> { Set(200..<300) }
+    
+    var sensitiveHeaders: Set<String>? { nil }
+    
+    var sensitiveParameters: Set<String>? { nil }
 
     // var parametersEncodings: [String : ParameterEncoding]? {
     //     nil
     // }
 
     var description: String {
+        let sensitiveDataReplacer = "-- Redacted --"
+        
+        var descr = "\(self.method) '"
+        if let baseUrl = self.host {
+            descr += "\(baseUrl)/"
+        }
+        descr += "\(self.path)'"
+        if var headers = self.headers {
+            sensitiveHeaders?.forEach {
+                headers[$0] = sensitiveDataReplacer
+            }
+            descr += "\nHeaders:\n\(headers)"
+        }
+        if var params = self.parameters {
+            sensitiveParameters?.forEach {
+                params[$0] = sensitiveDataReplacer
+            }
+            descr += "\nParameters:\n\(params)"
+        }
+        return descr
+    }
+    
+    var debugDescription: String {
         var descr = "\(self.method) '"
         if let baseUrl = self.host {
             descr += "\(baseUrl)/"
