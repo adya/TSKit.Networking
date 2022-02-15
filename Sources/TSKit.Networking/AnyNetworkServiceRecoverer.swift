@@ -51,13 +51,6 @@ public protocol AnyNetworkServiceRecoverer: AnyObject {
                 in service: AnyNetworkService)
 }
 
-public extension AnyNetworkServiceRecoverer {
-    
-    func update(request: inout URLRequest,
-                afterRecovering call: AnyRequestCall,
-                in service: AnyNetworkService) {}
-}
-
 /// A closure that is called to notify about recovery completion and whether or not it was successful.
 /// - Parameter isRecovered: Flag indicating whether recovery completed successfully or not.
 public typealias RecoveryCompletion = (_ isRecovered: Bool) -> Void

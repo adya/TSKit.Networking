@@ -32,7 +32,7 @@ open class RetryRecoverer: AnyNetworkServiceRecoverer {
     /// Set of HTTP response statuses that should be retried.
     /// - Note: If set, `AnyRequestable.recoverableStatuses` take precedence over this property.
     ///
-    /// Defaults to following set:
+    /// Defaults to the following set:
     /// - 408 Request Timeout
     /// - 500 Internal Server Error
     /// - 502 Bad Gateway
@@ -42,7 +42,7 @@ open class RetryRecoverer: AnyNetworkServiceRecoverer {
     
     /// Set of errors that are considered to be recoverable with multiple retries.
     ///
-    /// Defaults to `nil` which falls back to predefined values.
+    /// Defaults to `nil`.
     /// - Note: If set, `AnyRequestable.recoverableFailures` take precedence over this property.
     public var recoverableFailures: Set<URLError.Code>?
     
@@ -85,8 +85,8 @@ open class RetryRecoverer: AnyNetworkServiceRecoverer {
         let canRecoverMore = call.recoveryAttempts < maximumRecoveryAttempts
         let isRecoverableMethod = recoverableMethods.contains(requestable.method)
         
-        let isRecoverableError = { error.flatMap { recoverableFailures?.contains($0.code) } ?? true }
-        let isRecoverableStatus = { response.flatMap { recoverableStatuses?.contains($0.statusCode) } ?? true }
+        let isRecoverableError = { error.flatMap { recoverableFailures?.contains($0.code) } ?? false }
+        let isRecoverableStatus = { response.flatMap { recoverableStatuses?.contains($0.statusCode) } ?? false }
         
         return isRecoverableMethod && canRecoverMore && (isRecoverableStatus() || isRecoverableError())
     }

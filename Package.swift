@@ -11,7 +11,7 @@ let package = Package(
             targets: ["TSKit.Networking"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/adya/TSKit.Core.git", .upToNextMajor(from: "2.3.0"))
+        .package(url: "https://github.com/adya/TSKit.Core.git", .upToNextMajor(from: "2.9.0"))
     ],
     targets: [
         .target(
