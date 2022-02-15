@@ -41,7 +41,7 @@ public protocol AnyRequestable: CustomStringConvertible, CustomDebugStringConver
 
     /// Custom headers to be attached to request.
     /// - Note: If header already defined in `AnyNetworkSercideConfiguration`
-    ///         used to configure a service that will execute the request,
+    ///         used to configure the service that will execute the request,
     ///         request's headers will override configuration's headers.
     /// - Note: Optional.
     var headers: [String : String]? { get }

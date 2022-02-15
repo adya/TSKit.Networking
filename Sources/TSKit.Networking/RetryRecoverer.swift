@@ -5,9 +5,10 @@
 
 import Foundation
 
-/// A simple recoverer that attempts a number of retries for each request if it matches certain criteria based on HTTP response, status and error.
+/// A simple recoverer that attempts a number of retries for each request if it matches certain criteria based on HTTP response, status code and error.
 ///
-/// You can subclass `RetryRecoverer` to provide custom conditions as to when it should recover requests.
+/// You can subclass `RetryRecoverer` to provide custom conditions as to when it should recover requests as well as any additional actions to be performed during recovery.
+/// - Note: `recover(call:response:error:in:_:)` as well as `update(request:afterRecovering:in:)` do nothing. You should subclass and override these methods to provide custom logic.
 open class RetryRecoverer: AnyNetworkServiceRecoverer {
     
     /// HTTP Methods that should be retried.
@@ -40,6 +41,7 @@ open class RetryRecoverer: AnyNetworkServiceRecoverer {
     public var recoverableStatuses: Set<HTTPStatusCode>?
     
     /// Set of errors that are considered to be recoverable with multiple retries.
+    ///
     /// Defaults to `nil` which falls back to predefined values.
     /// - Note: If set, `AnyRequestable.recoverableFailures` take precedence over this property.
     public var recoverableFailures: Set<URLError.Code>?
@@ -96,4 +98,6 @@ open class RetryRecoverer: AnyNetworkServiceRecoverer {
                         _ completion: @escaping RecoveryCompletion) {
         completion(true)
     }
+    
+    open func update(request: inout URLRequest, afterRecovering call: AnyRequestCall, in service: AnyNetworkService) {}
 }

@@ -6,40 +6,43 @@
 import Foundation
 import TSKit_Core
 
-/// A variation of `RetryRecoverer` that is designed to defer recovery of all calls that fail with the same status code. This class is meant to be subclassed in order to perform meaningful recovery.
+/// A variation of `RetryRecoverer` that is designed to defer recovery of all calls that match the same criteria based on HTTP response, status code and error.
+/// This class is meant to be subclassed in order to perform meaningful recovery.
 ///
-/// At all times there is only one recovery process for the same HTTP status code: the first request that fails with a specific status code initiates the recovery.
-/// All subsequent calls that fail with the same status code will wait until existing recovery is finished, and then will be retried accordingly.
+/// At all times there is only one recovery process for the same criteria: the first failing request that matches the criteria initiates the recovery.
+/// All subsequent calls that fail for the same reason will wait until existing recovery is finished, and then will be retried in the same order as they failed.
 ///
-/// In most cases subclasses should only override `attemptRecovery(for:response:error:in:)` to provide custom recovery actions.
-/// - Note: Default implementation does not recovery and behaves like `RetryRecoverer`.
+/// Subclasses should override `attemptRecovery(for:response:error:in:)` instead of `recover(call:response:error:in:_:)` to provide custom recovery actions, since `DeferredRetryRecoverer` relies on its implementation of this method.
+///
+/// - Note: Default implementation does not perform any recovery and behaves like `RetryRecoverer`.
 open class DeferredRetryRecoverer: RetryRecoverer {
     
-    /// Calls pending recovery for the same status code.
-    private var recoveringCalls: [HTTPStatusCode: [RecoveryCompletion]] = [:]
+    /// A delegate that is notified about recovery stages.
+    public weak var delegate: DeferredRetryRecovererDelegate?
+    
+    /// Calls pending recovery.
+    @Synchronized(synchronizer: SemaphoreSynchronizer())
+    private var recoveringCalls: [RecoveryCompletion] = []
     
     public override func recover(call: AnyRequestCall, response: HTTPURLResponse?, error: URLError?, in service: AnyNetworkService, _ completion: @escaping RecoveryCompletion) {
-        guard let status = response?.statusCode else { return completion(false) }
+        guard recoveringCalls.isEmpty else {
+            delegate?.recoverer(self, didEnqueueRecoveryFor: call.request)
+            return recoveringCalls.append(completion)
+        }
         
-        // Check if there is already pending recovery for given status.
-        if recoveringCalls[status] != nil {
-            // If there is, then store retry completion in the pending queue for that status.
-            recoveringCalls[status]?.append(completion)
-        } else {
-            // If there is no recoveries pending for given status then attempt one.
-            recoveringCalls[status] = [completion]
-            
-            attemptRecovery(for: call, response: response, error: error, in: service) { [weak self] isRecovered in
-                self?.recoveringCalls[status]?.forEach { $0(isRecovered) }
-                self?.recoveringCalls[status] = nil
-            }
+        delegate?.recoverer(self, willStartRecoveryFor: call.request, with: response, error: error)
+        recoveringCalls.append(completion)
+        attemptRecovery(for: call, response: response, error: error, in: service) { [weak self] isRecovered in
+            guard let self = self else { return }
+            self.delegate?.recoverer(self, didFinishRecovery: isRecovered)
+            self.$recoveringCalls.replace(with: []).forEach { $0(isRecovered) }
         }
     }
     
     /// Performs an attempt to recover given `call` after encountering an error.
     ///
     /// Subclasses should override this method to perform custom actions needed for recovery.
-    /// Make sure to call `compltion` with flag indicating whether recovery was successful or not.
+    /// - Important: Make sure to call `completion` with a flag indicating whether recovery was successful or not.
     ///
     /// - Note: Base implementation of this method does nothing and immediately reports successful recovery completion.
     ///
@@ -50,4 +53,44 @@ open class DeferredRetryRecoverer: RetryRecoverer {
     open func attemptRecovery(for call: AnyRequestCall, response: HTTPURLResponse?, error: URLError?, in service: AnyNetworkService, _ completion: @escaping RecoveryCompletion) {
         completion(true)
     }
+}
+
+/// A delegate that is notified about recovery stages of `DeferredRetryRecoverer`.
+public protocol DeferredRetryRecovererDelegate: AnyObject {
+    
+    /// This method is called when `recoverer` is about to start recovery process for the first failed request.
+    /// - Parameter request: A request that has failed and will initiate recovery process.
+    /// - Parameter response: HTTP response associated with the request if available.
+    /// - Parameter error: Underlying error associated with the request.
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   willStartRecoveryFor request: AnyRequestable,
+                   with response: HTTPURLResponse?,
+                   error: URLError?)
+    
+    /// This method is called when `recoverer` receives a failed `request` during an already running recovery process.
+    /// - Parameter request: A request that has failed and will be enqueued for retry once current recovery process succeeds.
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   didEnqueueRecoveryFor request: AnyRequestable)
+    
+    /// This method is called when `recoverer` finishes current recovery and is about to send all pending request to be retried.
+    /// - Parameter isRecovered: Flag indicating whether recovery has finished successfully.
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   didFinishRecovery isRecovered: Bool)
+    
+}
+
+// MARK: - Defaults
+public extension DeferredRetryRecovererDelegate {
+    
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   willStartRecoveryFor request: AnyRequestable,
+                   with response: HTTPURLResponse?,
+                   error: URLError?) {}
+    
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   didEnqueueRecoveryFor request: AnyRequestable) {}
+    
+
+    func recoverer(_ recoverer: DeferredRetryRecoverer,
+                   didFinishRecovery isRecovered: Bool) {}
 }
