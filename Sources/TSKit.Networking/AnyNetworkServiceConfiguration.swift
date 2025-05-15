@@ -43,4 +43,6 @@ public extension AnyNetworkServiceConfiguration {
     var sessionConfiguration: URLSessionConfiguration { .default }
     
     var encodingOptions: ParameterEncoding.Options { .init() }
+
+    var sessionTemporaryFilesDirectory: URL? { nil }
 }
