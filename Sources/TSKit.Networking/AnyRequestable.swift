@@ -45,7 +45,10 @@ public protocol AnyRequestable: CustomStringConvertible, CustomDebugStringConver
     ///         request's headers will override configuration's headers.
     /// - Note: Optional.
     var headers: [String : String]? { get }
-    
+
+    /// A set of default header names that should be ignored in configuration for this request.
+    var ignoredDefaultHeaders: Set<String> { get }
+
     /// Header names that are considered sensitive and should be excluded from request's description.
     ///
     /// Headers listed as sensitive are excluded from default `description` representation of `AnyRequestable` objects.
@@ -95,6 +98,10 @@ public extension AnyRequestable {
         nil
     }
 
+    var ignoredDefaultHeaders: Set<String> {
+        []
+    }
+
     var parameters: [String : Any]? {
         nil
     }
@@ -142,6 +149,9 @@ public extension AnyRequestable {
             }
             descr += "\nHeaders:\n\(headers)"
         }
+        if !self.ignoredDefaultHeaders.isEmpty {
+            descr += "\nIgnored headers:\n\(ignoredDefaultHeaders)"
+        }
         if var params = self.parameters {
             sensitiveParameters?.forEach {
                 params[$0] = sensitiveDataReplacer
@@ -159,6 +169,9 @@ public extension AnyRequestable {
         descr += "\(self.path)'"
         if let headers = self.headers {
             descr += "\nHeaders:\n\(headers)"
+        }
+        if !self.ignoredDefaultHeaders.isEmpty {
+            descr += "\nIgnored headers:\n\(ignoredDefaultHeaders)"
         }
         if let params = self.parameters {
             descr += "\nParameters:\n\(params)"

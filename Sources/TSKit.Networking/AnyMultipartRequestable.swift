@@ -42,6 +42,9 @@ public extension AnyMultipartRequestable {
         if let headers = self.headers {
             descr += "\nHeaders:\n\(headers)"
         }
+        if !self.ignoredDefaultHeaders.isEmpty {
+            descr += "\nIgnored headers:\n\(ignoredDefaultHeaders)"
+        }
         if let params = self.parameters {
             descr += "\nParameters:\n\(params)"
         }

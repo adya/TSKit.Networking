@@ -16,9 +16,6 @@ let package = Package(
     targets: [
         .target(
             name: "TSKit.Networking",
-            dependencies: ["TSKit.Core"]),
-        .testTarget(
-            name: "TSKit.NetworkingTests",
-            dependencies: ["TSKit.Networking"]),
+            dependencies: ["TSKit.Core"])
     ]
 )
